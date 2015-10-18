@@ -6,7 +6,7 @@
 
 With GG Project you don't need to traffic human organs to pay for the latest games, you can get them for as low as $0,99 and have fun for free at the same time!
 
-Compite against skilled players like you and win both reputation and the latest games in the market. 
+Compite against skilled players like you and win both reputation and the latest games in the market.
 
 *GG Project: Pay with your skill, not your money*
 
@@ -20,7 +20,7 @@ Compite against skilled players like you and win both reputation and the latest 
 #### Building
 
 * To build locally, run the command `meteor` inside the folder that contains `.meteor`
-* The application will be available in `localhost:3000` 
+* The application will be available in `localhost:3000`
 
 #### Merging
 
