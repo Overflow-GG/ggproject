@@ -3,5 +3,11 @@ angular
     .controller('HomeController', HomeController);
 
 function HomeController() {
-    // Do something...
+    var vm = this;
+
+    // Bindeable members declaration goes here
+
+    ////////////
+
+    // Implementation goes here
 }
