@@ -1,0 +1,9 @@
+body {
+    /* Navbar height is 50px, add some padding to the body */
+    padding-top: 70px;
+}
+
+.footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
