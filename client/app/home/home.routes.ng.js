@@ -21,7 +21,8 @@ angular
                 .state('home', {
                     url: '/home',
                     templateUrl: 'client/app/home/home.view.ng.html',
-                    controller: 'HomeController'
+                    controller: 'HomeController',
+                    controllerAs: 'vm'
                 });
 
             $urlRouterProvider.otherwise("/home");
