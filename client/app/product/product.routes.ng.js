@@ -5,7 +5,7 @@ angular
             // We can catch the error thrown when the $requireUser promise is rejected
             // and redirect the user back to the main page
             if (error === 'AUTH_REQUIRED') {
-                $state.go('home');
+                $state.go('homeState');
             }
         });
     }]);
@@ -18,7 +18,7 @@ angular
             $locationProvider.html5Mode(true);
 
             $stateProvider
-                .state('product', {
+                .state('productState', {
                     url: '/product/{productId}',
                     templateUrl: 'client/app/product/product.view.ng.html',
                     controller: 'ProductController',
