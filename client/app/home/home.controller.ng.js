@@ -2,10 +2,12 @@ angular
     .module("app-gg")
     .controller('HomeController', HomeController);
 
-function HomeController() {
+HomeController.$inject = ['$meteor'];
+
+function HomeController($meteor) {
     var vm = this;
 
-    // Bindeable members declaration goes here
+    vm.products = $meteor.collection(ProductsCollection);
 
     ////////////
 
