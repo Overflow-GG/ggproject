@@ -22,3 +22,6 @@ angular
 twbs:bootstrap
 angularui:angular-ui-bootstrap
 angularui:angular-ui-router
+accounts-password
+accounts-ui
+urigo:angular-blaze-template
