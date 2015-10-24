@@ -15,16 +15,18 @@ angular
     .config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
         function($urlRouterProvider, $stateProvider, $locationProvider) {
 
-            $locationProvider.html5Mode(true);
-
             $stateProvider
                 .state('matchState', {
                     url: '/match/{matchId}',
                     templateUrl: 'client/app/match/match.view.ng.html',
                     controller: 'MatchController',
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    resolve: {
+                        "currentUser": function($meteor) {
+                            return $meteor.requireUser();
+                        }
+                    }
                 });
 
-            $urlRouterProvider.otherwise("/home");
         }
     ]);
