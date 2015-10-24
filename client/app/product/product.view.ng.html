@@ -1,8 +1,24 @@
 <!-- START OF PRODUCT CONTENT -->
 <div class="container">
-    <div class="row text-center">
-        <h1>Product detail</h1>
-        <h3>Item ID: {{vm.productId}}</h3>
+    <div class="jumbotron">
+        <div class="row text-center">
+            <h1>{{vm.product.name}}</h1>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <img src="{{vm.product.imageUrl}}" class="img-responsive img-rounded center-block" alt="Image">
+                <h6 class="text-center"><span class="glyphicon glyphicon-barcode"></span> <strong>Product code:</strong> {{vm.product._id}}</h6>
+            </div>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <h2>
+                	<span class="glyphicon glyphicon-star"></span> {{vm.product.points}}
+                	<span ng-repeat="category in vm.product.categories"><span class="badge">{{category}}</span> </span>
+                </h2>
+                <p>{{vm.product.shortDescription}}</p>
+                <p><small>{{vm.product.longDescription}}</small></p>
+            </div>
+        </div>
     </div>
 </div>
 <!-- END OF PRODUCT CONTENT -->

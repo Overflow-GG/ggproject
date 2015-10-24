@@ -2,10 +2,12 @@ angular
     .module("app-gg")
     .controller('ProductController', ProductController);
 
-function ProductController($stateParams) {
+ProductController.$inject = ['$meteor', '$stateParams'];
+
+function ProductController($meteor, $stateParams) {
     var vm = this;
 
-    vm.productId = $stateParams.productId;
+    vm.product = $meteor.object(ProductsCollection, $stateParams.productId);
 
     ////////////
 
