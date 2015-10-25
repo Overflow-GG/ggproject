@@ -10,19 +10,9 @@
     <!-- START OF SECTION: Featured matches -->
     <div class="h3">Featured matches</div>
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <a ui-sref="matchState({matchId: 1})">
-                <img src="img/opt/dota-2_opt.jpg" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
-            </a>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <a ui-sref="matchState({matchId: 2})">
-                <img src="img/opt/league-of-legends_opt.jpg" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
-            </a>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <a ui-sref="matchState({matchId: 3})">
-                <img src="img/opt/csgo_opt.jpg" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
+        <div ng-repeat="match in vm.matchs" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <a ui-sref="matchState({matchId: match._id})">
+                <img src="{{match.game.imageUrl}}" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
             </a>
         </div>
     </div>

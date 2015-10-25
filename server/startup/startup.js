@@ -1,20 +1,88 @@
 Meteor.startup(function() {
 
-    generateDummyProducts(); // Default data for GamesCollection
+    generateDummyProducts(); // Default data for ProductsCollection
+    generateDummyMatchs(); // Default data for MatchsCollection
 
     ////////////
 
-    function generateDummyProducts() {
+    /**
+     * A product is a claimeable reward for competing in GG Project. To claim this product a player needs to have
+     * a sufficient amount of points
+     * @param {String}          name                Name (ex: 'Battlefield 4')
+     * @param {Array<String>}   categories          Categories array (ex: ['FPS', 'Action'])
+     * @param {String}          shortDescription    Short description of the product (ex:'The best game ever')
+     * @param {String}          longDescription     Long description used on the product's detail view (ex: 'Furthermore, this game has multiplayer')
+     * @param {String}          imageUrl            Image URL of the product (ex: 'example.com/battelfield4_cover.png')
+     * @param {String}          videoUrl            Option YouTube trailer of the product (ex: 'https://www.youtube.com/embed/cC2bsG4vVG4')
+     * @param {Number}          points              Necessary points to claim this product as a reward
+     */
+    function Product(name, categories, shortDescription, longDescription, imageUrl, videoUrl, points) {
+        this.name = name;
+        this.categories = categories;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.imageUrl = imageUrl;
+        this.videoUrl = videoUrl;
+        this.points = points;
+    }
 
-        function Product(name, categories, shortDescription, longDescription, imageUrl, videoUrl, points) {
-            this.name = name;
-            this.categories = categories;
-            this.shortDescription = shortDescription;
-            this.longDescription = longDescription;
-            this.imageUrl = imageUrl;
-            this.videoUrl = videoUrl;
-            this.points = points;
-        }
+    /**
+     * A Game is a Product that can have matchs
+     * @prototype Product
+     * @param {Nymber}          slots            Max number of concurrent players in a match of this game
+     * @param {Array<String>}   modes            An array of game modes for this game (ex: ['Team vs. Team' , 'Free for all', 'Knives only'])
+     */
+    function Game(name, categories, shortDescription, longDescription, imageUrl, videoUrl, points, slots, modes) {
+        Product.call(this, name, categories, shortDescription, longDescription, imageUrl, videoUrl, points);
+
+        this.slots = slots;
+        this.modes = modes;
+    }
+    Game.prototype = new Product();
+
+    /**
+     * A chat's message
+     * @param {String}          text                Text of the message
+     * @param {String}          username            Username of the account that created the message
+     * @param {String}          accountId           ID of the account that created the message
+     */
+    function Message(text, username, accountId) {
+        this.text = text;
+        this.username = username;
+        this.accountId = accountId;
+    }
+
+    /**
+     * A player is an Account that participates in match
+     * @param {String}          accountId           ID of the Account associated with this player
+     * @param {String}          username            Username of the associated Account
+     * @param {String}          avatarUrl           URL of the associated Account's avatar image
+     */
+    function Player(accountId, username, avatarUrl) {
+        this.text = text;
+        this.username = username;
+        this.accountId = accountId;
+    }
+
+    /**
+     * A match is were players gather together to compete within each other to win awards (points that can be later exchanged for products)
+     * @param {Game}            game                A Game (which is a Product) where the players want to compete on
+     * @param {MatchStatus}     status              Current status of the match
+     * @param {Number}          fee                 The cost in dollars of joining this match
+     * @param {Array<Player>}   players             An array of players involved in the match
+     * @param {Array<Number>}   awards              An array that contains the points to be awarded for the 1st, 2nd, 3th, etc, positions at the end of the match
+     * @param {Array<Message>}  messages            Players messages of the match's chat
+     */
+    function Match(game, status, fee, players, awards, messages) {
+        this.game = game;
+        this.status = status;
+        this.fee = fee;
+        this.players = players;
+        this.awards = awards;
+        this.messages = messages;
+    }
+
+    function generateDummyProducts() {
 
         if (ProductsCollection.find().count() === 0) {
 
@@ -88,6 +156,61 @@ Meteor.startup(function() {
             for (var i = 0; i < products.length; i++)
                 ProductsCollection.insert(products[i]);
         }
+    }
+
+    function generateDummyMatchs() {
+
+        /**
+         * An object used as an Enum for indicating the current state of a match
+         * @type {Number}
+         */
+        var MatchStatus = Object.freeze({
+            ERROR: 'ERROR',
+            WAITING_FOR_PLAYERS: 'WAITING_FOR_PLAYERS',
+            ONGOING: 'ONGOING',
+            ENDED: 'ENDED'
+        });
+
+        if (MatchsCollection.find().count() === 0) {
+
+            var matchs = [
+                new Match(
+                    new Game(
+                        'League of Legends', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
+                        'League of Legends is a fast-paced, competitive online game that blends the speed and intensity of an RTS with RPG elements.',
+                        'Two teams of powerful champions, each with a unique design and playstyle, battle head-to-head across multiple battlefields and game modes. With an ever-expanding roster of champions, frequent updates and a thriving tournament scene, League of Legends offers endless replayability for players of every skill level.',
+                        'img/opt/league-of-legends_opt.jpg',
+                        'https://www.youtube.com/embed/cXZqfuJ9Zps',
+                        0, 10, []
+                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+                ),
+                new Match(
+                    new Game(
+                        'Counter Strike: GO', ['FPS', 'Shooter', 'Team-based', 'Multiplayer'],
+                        'Counter-Strike: Global Offensive (CS: GO) will expand upon the team-based action gameplay that it pioneered when it was launched 14 years ago.',
+                        'CS: GO features new maps, characters, and weapons and delivers updated versions of the classic CS content (de_dust, etc.). In addition, CS: GO will introduce new gameplay modes, matchmaking, leader boards, and more.',
+                        'img/opt/csgo_opt.jpg',
+                        'https://www.youtube.com/embed/edYCtaNueQY',
+                        1000, 16, []
+                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+                ),
+                new Match(
+                    new Game(
+                        'Dota 2', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
+                        'Dota is a competitive game of action and strategy, played both professionally and casually by millions of passionate fans worldwide. Players pick from a pool of over a hundred heroes, forming two teams of five players. Radiant heroes then battle their Dire counterparts to control a gorgeous fantasy landscape, waging campaigns of cunning, stealth, and outright warfare.',
+                        'Irresistibly colorful on the surface, Dota is a game of infinite depth and complexity. Every hero has an array of skills and abilities that combine with the skills of their allies in unexpected ways, to ensure that no game is ever remotely alike. This is one of the reasons that the Dota phenomenon has continued to grow. Originating as a fan-made Warcraft 3 modification, Dota was an instant underground hit. After coming to Valve, the original community developers have bridged the gap to a more inclusive audience, so that the rest of the world can experience the same core gameplay, but with the level of polish that only Valve can provide.',
+                        'img/opt/dota-2_opt.jpg',
+                        'https://www.youtube.com/embed/-cSFPIwMEq4',
+                        0, 10, []
+                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+                )
+            ];
+
+            for (var i = 0; i < matchs.length; i++)
+                MatchsCollection.insert(matchs[i]);
+
+        }
+
     }
 
 });

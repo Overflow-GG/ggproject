@@ -2,10 +2,12 @@ angular
     .module("app-gg")
     .controller('MatchController', MatchController);
 
-function MatchController($stateParams) {
+MatchController.$inject = ['$meteor', '$stateParams'];
+
+function MatchController($meteor, $stateParams) {
     var vm = this;
 
-    vm.matchId = $stateParams.matchId;
+    vm.match = $meteor.object(MatchsCollection, $stateParams.matchId);
 
     ////////////
 
