@@ -8,6 +8,7 @@ function HomeController($meteor) {
     var vm = this;
 
     vm.products = $meteor.collection(ProductsCollection);
+    vm.matchs = $meteor.collection(MatchsCollection);
 
     ////////////
 

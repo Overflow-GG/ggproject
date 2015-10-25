@@ -1,0 +1,8 @@
+.matchGameImage
+{
+    width: 250px;
+    height: 350px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-size: cover;
+}
