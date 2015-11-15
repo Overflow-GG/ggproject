@@ -8,9 +8,10 @@ function HomeController($meteor) {
     var vm = this;
 
     vm.products = $meteor.collection(ProductsCollection);
-    vm.matchs = $meteor.collection(MatchsCollection);
+    vm.games = $meteor.collection(GamesCollection);
 
     ////////////
 
     // Implementation goes here
+
 }

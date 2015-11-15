@@ -23,6 +23,9 @@
                     <h4>Players ready</h4>
                     <h1>{{vm.match.players.length}} / {{vm.match.game.slots}}</h1>
                 </div>
+                <ul>
+                    <li ng-repeat="player in vm.match.players">{{player.accountId}}</li>
+                </ul>
             </div>
         </div>
     </div>
