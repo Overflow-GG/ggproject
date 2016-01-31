@@ -1,7 +1,7 @@
 Meteor.startup(function() {
 
     generateDummyProducts(); // Default data for ProductsCollection
-    generateDummyMatchs(); // Default data for MatchsCollection
+    generateDummyGames(); // Default data for GamesCollection
 
     ////////////
 
@@ -59,9 +59,9 @@ Meteor.startup(function() {
      * @param {String}          avatarUrl           URL of the associated Account's avatar image
      */
     function Player(accountId, username, avatarUrl) {
-        this.text = text;
-        this.username = username;
         this.accountId = accountId;
+        this.username = username;
+        this.avatarUrl = avatarUrl;
     }
 
     /**
@@ -154,63 +154,44 @@ Meteor.startup(function() {
             ];
 
             for (var i = 0; i < products.length; i++)
-                ProductsCollection.insert(products[i]);
+                ProductsCollection.insert(products[i], function(error, data) {
+                    if (error) console.log("Error when inserting new product: " + error);
+                });
         }
     }
 
-    function generateDummyMatchs() {
-
-        /**
-         * An object used as an Enum for indicating the current state of a match
-         * @type {Number}
-         */
-        var MatchStatus = Object.freeze({
-            ERROR: 'ERROR',
-            WAITING_FOR_PLAYERS: 'WAITING_FOR_PLAYERS',
-            ONGOING: 'ONGOING',
-            ENDED: 'ENDED'
-        });
-
-        if (MatchsCollection.find().count() === 0) {
-
-            var matchs = [
-                new Match(
-                    new Game(
-                        'League of Legends', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
-                        'League of Legends is a fast-paced, competitive online game that blends the speed and intensity of an RTS with RPG elements.',
-                        'Two teams of powerful champions, each with a unique design and playstyle, battle head-to-head across multiple battlefields and game modes. With an ever-expanding roster of champions, frequent updates and a thriving tournament scene, League of Legends offers endless replayability for players of every skill level.',
-                        'img/opt/league-of-legends_opt.jpg',
-                        'https://www.youtube.com/embed/cXZqfuJ9Zps',
-                        0, 10, []
-                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+    function generateDummyGames() {
+        if (GamesCollection.find().count() === 0) {
+            var games = [
+                new Game(
+                    'League of Legends', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
+                    'League of Legends is a fast-paced, competitive online game that blends the speed and intensity of an RTS with RPG elements.',
+                    'Two teams of powerful champions, each with a unique design and playstyle, battle head-to-head across multiple battlefields and game modes. With an ever-expanding roster of champions, frequent updates and a thriving tournament scene, League of Legends offers endless replayability for players of every skill level.',
+                    'img/opt/league-of-legends_opt.jpg',
+                    'https://www.youtube.com/embed/cXZqfuJ9Zps',
+                    0, 10, []
                 ),
-                new Match(
-                    new Game(
-                        'Counter Strike: GO', ['FPS', 'Shooter', 'Team-based', 'Multiplayer'],
-                        'Counter-Strike: Global Offensive (CS: GO) will expand upon the team-based action gameplay that it pioneered when it was launched 14 years ago.',
-                        'CS: GO features new maps, characters, and weapons and delivers updated versions of the classic CS content (de_dust, etc.). In addition, CS: GO will introduce new gameplay modes, matchmaking, leader boards, and more.',
-                        'img/opt/csgo_opt.jpg',
-                        'https://www.youtube.com/embed/edYCtaNueQY',
-                        1000, 16, []
-                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+                new Game(
+                    'Counter Strike: GO', ['FPS', 'Shooter', 'Team-based', 'Multiplayer'],
+                    'Counter-Strike: Global Offensive (CS: GO) will expand upon the team-based action gameplay that it pioneered when it was launched 14 years ago.',
+                    'CS: GO features new maps, characters, and weapons and delivers updated versions of the classic CS content (de_dust, etc.). In addition, CS: GO will introduce new gameplay modes, matchmaking, leader boards, and more.',
+                    'img/opt/csgo_opt.jpg',
+                    'https://www.youtube.com/embed/edYCtaNueQY',
+                    1000, 16, []
                 ),
-                new Match(
-                    new Game(
-                        'Dota 2', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
-                        'Dota is a competitive game of action and strategy, played both professionally and casually by millions of passionate fans worldwide. Players pick from a pool of over a hundred heroes, forming two teams of five players. Radiant heroes then battle their Dire counterparts to control a gorgeous fantasy landscape, waging campaigns of cunning, stealth, and outright warfare.',
-                        'Irresistibly colorful on the surface, Dota is a game of infinite depth and complexity. Every hero has an array of skills and abilities that combine with the skills of their allies in unexpected ways, to ensure that no game is ever remotely alike. This is one of the reasons that the Dota phenomenon has continued to grow. Originating as a fan-made Warcraft 3 modification, Dota was an instant underground hit. After coming to Valve, the original community developers have bridged the gap to a more inclusive audience, so that the rest of the world can experience the same core gameplay, but with the level of polish that only Valve can provide.',
-                        'img/opt/dota-2_opt.jpg',
-                        'https://www.youtube.com/embed/-cSFPIwMEq4',
-                        0, 10, []
-                    ), MatchStatus.WAITING_FOR_PLAYERS, 0.99, [], [1000, 250], []
+                new Game(
+                    'Dota 2', ['MOBA', 'Strategy', 'Competitive', 'Multiplayer'],
+                    'Dota is a competitive game of action and strategy, played both professionally and casually by millions of passionate fans worldwide. Players pick from a pool of over a hundred heroes, forming two teams of five players. Radiant heroes then battle their Dire counterparts to control a gorgeous fantasy landscape, waging campaigns of cunning, stealth, and outright warfare.',
+                    'Irresistibly colorful on the surface, Dota is a game of infinite depth and complexity. Every hero has an array of skills and abilities that combine with the skills of their allies in unexpected ways, to ensure that no game is ever remotely alike. This is one of the reasons that the Dota phenomenon has continued to grow. Originating as a fan-made Warcraft 3 modification, Dota was an instant underground hit. After coming to Valve, the original community developers have bridged the gap to a more inclusive audience, so that the rest of the world can experience the same core gameplay, but with the level of polish that only Valve can provide.',
+                    'img/opt/dota-2_opt.jpg',
+                    'https://www.youtube.com/embed/-cSFPIwMEq4',
+                    0, 10, []
                 )
             ];
 
-            for (var i = 0; i < matchs.length; i++)
-                MatchsCollection.insert(matchs[i]);
-
+            for (var i = 0; i < games.length; i++)
+                GamesCollection.insert(games[i]);
         }
-
     }
 
 });
