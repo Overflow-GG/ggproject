@@ -2,7 +2,8 @@ angular
     .module('app-gg', [
         'angular-meteor',
         'ui.router',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'accounts.ui'
     ]);
 
 function onReady() {

@@ -1,16 +1,41 @@
 angular
-    .module("app-gg")
-    .controller('HomeController', HomeController);
+  .module("app-gg")
+  .controller('HomeController', HomeController);
 
-HomeController.$inject = ['$meteor'];
+HomeController.$inject = ['$scope', '$reactive'];
 
-function HomeController($meteor) {
-    var vm = this;
+function HomeController($scope, $reactive) {
+  $reactive(this).attach($scope);
 
-    vm.products = $meteor.collection(ProductsCollection);
-    vm.matchs = $meteor.collection(MatchsCollection);
+  onSubscribe(this);
+  onCreateHelpers(this);
+  onStart(this);
 
-    ////////////
+  ////////////
 
-    // Implementation goes here
+  function onSubscribe(controller) {
+    controller.subscribe("ProductsCollection");
+    controller.subscribe("GamesCollection");
+  }
+
+  ////////////
+
+  function onCreateHelpers(controller) {
+    // Helpers exposed as VM
+    controller.helpers({
+      products: () => {
+        return ProductsCollection.find({});
+      },
+      games: () => {
+        return GamesCollection.find({});
+      }
+    });
+  }
+
+  ////////////
+
+  function onStart(controller) {
+    // Nothing...
+  }
+
 }

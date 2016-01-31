@@ -1,16 +1,40 @@
 angular
-    .module("app-gg")
-    .controller('ProductController', ProductController);
+  .module("app-gg")
+  .controller('ProductController', ProductController);
 
-ProductController.$inject = ['$meteor', '$stateParams', '$sce'];
+ProductController.$inject = ['$scope', '$reactive', '$stateParams', '$sce'];
 
-function ProductController($meteor, $stateParams, $sce) {
-    var vm = this;
+function ProductController($scope, $reactive, $stateParams, $sce) {
+  $reactive(this).attach($scope);
 
-    vm.product = $meteor.object(ProductsCollection, $stateParams.productId);
-    vm.trustedVideoUrl = $sce.trustAsResourceUrl(vm.product.videoUrl);
+  onSubscribe(this);
+  onCreateHelpers(this);
+  onStart(this);
 
-    ////////////
+  ////////////
 
-    // Implementation goes here
+  function onSubscribe(controller) {
+    controller.subscribe("ProductsCollection");
+  }
+
+  ////////////
+
+  function onCreateHelpers(controller) {
+    // Helpers exposed as VM
+    controller.helpers({
+      product: () => {
+        return ProductsCollection.findOne($stateParams.productId)
+      },
+      trustedVideoUrl: () => {
+        // Required by Angular for security reasons
+        return $sce.trustAsResourceUrl(controller.product.videoUrl);
+      }
+    });
+  }
+
+  ////////////
+
+  function onStart(controller) {
+    // Nothing...
+  }
 }
