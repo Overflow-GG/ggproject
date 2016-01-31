@@ -1,11 +1,9 @@
 <!-- START OF MATCH CONTENT -->
 <div class="container">
     <div class="row">
-        <div class="col-md-2 col-md-offset-1"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/rosspw/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/teabass/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
+        <div ng-repeat="avatar in vm.upperSideAvatars track by $index" class="col-md-2 col-md-offset-1">
+            <img src="{{avatar}}" class="img-responsive img-rounded center-block" alt="Image">
+        </div>
     </div>
     <br>
     <div class="row jumbotron">
@@ -23,15 +21,16 @@
                     <h4>Players ready</h4>
                     <h1>{{vm.match.players.length}} / {{vm.match.game.slots}}</h1>
                 </div>
+                <ul>
+                    <li ng-repeat="player in vm.match.players">{{player.accountId}}</li>
+                </ul>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2 col-md-offset-1"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/rosspw/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/rem/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
-        <div class="col-md-2"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/teabass/128.jpg" class="img-responsive img-rounded center-block" alt="Image"></div>
+        <div ng-repeat="avatar in vm.lowerSideAvatars track by $index" class="col-md-2 col-md-offset-1">
+            <img src="{{avatar}}" class="img-responsive img-rounded center-block" alt="Image">
+        </div>
     </div>
 </div>
 <!-- END OF MATCH CONTENT -->

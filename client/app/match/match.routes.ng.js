@@ -17,7 +17,7 @@ angular
 
             $stateProvider
                 .state('matchState', {
-                    url: '/match/{matchId}',
+                    url: '/match/{gameId}',
                     templateUrl: 'client/app/match/match.view.ng.html',
                     controller: 'MatchController',
                     controllerAs: 'vm',

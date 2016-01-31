@@ -10,9 +10,9 @@
     <!-- START OF SECTION: Featured matches -->
     <div class="h3">Featured matches</div>
     <div class="row">
-        <div ng-repeat="match in vm.matchs" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <a ui-sref="matchState({matchId: match._id})">
-                <img src="{{match.game.imageUrl}}" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
+        <div ng-repeat="game in vm.games" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <a ui-sref="matchState({gameId: game._id})">
+                <img src="{{game.imageUrl}}" height="750" width="500" class="img-responsive img-rounded center-block homeFeaturedImage" alt="Image">
             </a>
         </div>
     </div>
