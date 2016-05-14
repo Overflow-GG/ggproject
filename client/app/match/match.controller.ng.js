@@ -2,9 +2,9 @@ angular
   .module("app-gg")
   .controller('MatchController', MatchController);
 
-MatchController.$inject = ['$scope', '$reactive', '$stateParams', '$rootScope'];
+MatchController.$inject = ['$scope', '$reactive', '$stateParams'];
 
-function MatchController($scope, $reactive, $stateParams, $rootScope) {
+function MatchController($scope, $reactive, $stateParams) {
   $reactive(this).attach($scope);
 
   onSubscribe(this);

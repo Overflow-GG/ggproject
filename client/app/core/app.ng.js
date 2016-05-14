@@ -1,16 +1,17 @@
 angular
-    .module('app-gg', [
-        'angular-meteor',
-        'ui.router',
-        'ui.bootstrap',
-        'accounts.ui'
-    ]);
+  .module('app-gg', [
+    'angular-meteor',
+    'angular-meteor.auth',
+    'ui.router',
+    'ui.bootstrap',
+    'accounts.ui'
+  ]);
 
 function onReady() {
-    angular.bootstrap(document, ['app-gg']);
+  angular.bootstrap(document, ['app-gg']);
 }
 
 if (Meteor.isCordova)
-    angular.element(document).on("deviceready", onReady);
+  angular.element(document).on("deviceready", onReady);
 else
-    angular.element(document).ready(onReady);
+  angular.element(document).ready(onReady);
