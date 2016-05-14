@@ -22,7 +22,7 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
                         <li ui-sref-active="active"><a ui-sref="homeState">Home</a></li>
-                        <li><a href="#">Link</a></li>
+                        <li ui-sref-active="active" ng-show="$auth.currentUser"><a ui-sref="profileState({userId: $auth.currentUser._id})">Profile</a></li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
@@ -62,7 +62,7 @@
         <div class="container">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <h4>
-                    <span class="pull-left">GG Project <span class="glyphicon glyphicon-copyright-mark "></span> 2015</span>
+                    <span class="pull-left">GG Project <span class="glyphicon glyphicon-copyright-mark "></span> 2016</span>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
